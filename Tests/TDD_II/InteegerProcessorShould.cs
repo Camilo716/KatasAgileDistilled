@@ -1,6 +1,7 @@
-namespace Tests;
-using CConsole.KataClass;
-using Console.Dto;
+namespace Tests.TDD_II;
+
+using Katas.TDD_II;
+using Katas.TDD_II.Dto;
 
 public class InteegerProcessorShould
 {
@@ -8,7 +9,7 @@ public class InteegerProcessorShould
     public void GetCorrectStatistics()
     {
         IntegeerProcessor processor = new();
-        int[] numbers = new int[] {6, 9, 15, -2, 92, 11};
+        int[] numbers = [6, 9, 15, -2, 92, 11];
 
         SequenceNumberStatistics statistics = processor.GetStatistics(numbers); 
 

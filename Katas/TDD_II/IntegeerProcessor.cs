@@ -1,6 +1,6 @@
-using Console.Dto;
+using Katas.TDD_II.Dto;
 
-namespace CConsole.KataClass;
+namespace Katas.TDD_II;
 
 public class IntegeerProcessor
 {
@@ -16,6 +16,4 @@ public class IntegeerProcessor
 
         return statistics;
     }
-
-
 }

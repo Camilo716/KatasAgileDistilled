@@ -1,6 +1,6 @@
-using CConsole;
+using Katas.TDD_I;
 
-namespace Tests;
+namespace Tests.TDD_I;
 
 public class FizzBuzzShould
 {

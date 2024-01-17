@@ -1,10 +1,10 @@
-﻿namespace CConsole;
+﻿namespace Katas.TDD_I;
 
 public class FizzBuzz
 {
     public List<string> MapNumbersToFizzBuzz(int inclusiveFrom, int inclusiveTo)
     {
-        List<string> words = new();
+        List<string> words = [];
 
         for (int i = inclusiveFrom; i <= inclusiveTo; i++)
         {

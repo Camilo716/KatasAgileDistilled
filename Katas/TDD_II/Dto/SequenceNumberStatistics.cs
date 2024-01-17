@@ -1,5 +1,5 @@
 
-namespace Console.Dto;
+namespace Katas.TDD_II.Dto;
 
 public class SequenceNumberStatistics
 {
