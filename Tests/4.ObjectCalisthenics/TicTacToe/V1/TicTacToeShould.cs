@@ -1,3 +1,4 @@
+using System.Runtime;
 using Katas.ObjectCalisthenics.TicTacToe.V1;
 using Katas.ObjectCalisthenics.TicTacToe.V1.Exceptions;
 using Xunit.Sdk;
@@ -68,7 +69,7 @@ public class TicTacToeShould
     }
 
     [Fact]
-    public void PlayerWinsWithHorizontalyInARow()
+    public void PlayerWinsWithHorizontaly()
     {
         TicTacToe ticTacToe = new();
 
@@ -83,6 +84,26 @@ public class TicTacToeShould
             {'O', ' ', ' '},
             {'X', 'X', 'X'},
         };
+        Assert.Equal(expectedBoard, ticTacToe.Board);
+        Assert.Equal(1, ticTacToe.WinnerId);
+    }
+
+    [Fact]
+    public void PlayerWinsVertically()
+    {
+        TicTacToe ticTacToe = new();
+        
+        ticTacToe.PlaceMark(new() { Y = 2, X = 0});
+        ticTacToe.PlaceMark(new() { Y = 1, X = 1});
+        ticTacToe.PlaceMark(new() { Y = 1, X = 0});
+        ticTacToe.PlaceMark(new() { Y = 1, X = 2});
+        ticTacToe.PlaceMark(new() { Y = 0, X = 0});
+
+       char[,] expectedBoard = new char[3,3] {
+            {'X', ' ', ' '},
+            {'X', 'O', 'O'},
+            {'X', ' ', ' '},
+        };   
         Assert.Equal(expectedBoard, ticTacToe.Board);
         Assert.Equal(1, ticTacToe.WinnerId);
     }

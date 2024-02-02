@@ -33,7 +33,9 @@ public class TicTacToe
     private void CheckForWinner(char mark, int playerId)
     {
         CheckForHorizontalWin(mark, playerId);
+        CheckForVerticalWin(mark, playerId);
     }
+
 
     private void CheckForHorizontalWin(char mark, int playerId)
     {
@@ -42,6 +44,20 @@ public class TicTacToe
             bool markIsInFullRow = Board[row, 0] == mark && Board[row, 1] == mark && Board[row, 2] == mark;
 
             if(markIsInFullRow)
+            {
+                WinnerId = playerId;
+                return;
+            }
+        }
+    }
+
+    private void CheckForVerticalWin(char mark, int playerId)
+    {
+        for(int col = 0; col < 3; col++)
+        {
+            bool markIsInFullColumn = Board[0, col] == mark && Board[1, col] == mark && Board[2, col] == mark;
+
+            if(markIsInFullColumn)
             {
                 WinnerId = playerId;
                 return;
