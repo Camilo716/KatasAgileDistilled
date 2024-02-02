@@ -8,13 +8,19 @@ namespace Katas.ObjectCalisthenics.TicTacToe.V1;
 public class TicTacToe
 {
     public int WinnerId { get; private set; } = -1;  
-    private int _nextToPlayId = 1;
-    private BoardTicTacToe _board;
+    private readonly BoardTicTacToe _board;
+    private readonly Player _player1;
+    private readonly Player _player2;
+    private Player _nextToPlay;
 
     public TicTacToe(BoardTicTacToe board)
     {
         _board = board;
         _board.InitializeEmptyBoard();
+
+        _player1 = new Player { Id = 1, Mark = 'X'};
+        _player2 = new Player { Id = 2, Mark = 'O'};
+        _nextToPlay = _player1;
     }
 
     public char[,] GetCurrentBoard()
@@ -28,55 +34,52 @@ public class TicTacToe
         if(!isEmptyPosition)
             throw new PlayOnPlayedPositionException($"The position Y: {coords.Y} X: {coords.X} is not empty");
 
-        char mark = _nextToPlayId == 1 ? 'X' : 'O';
+        _board.FillSquare(coords, _nextToPlay.Mark);
 
-        _board.FillSquare(coords, mark);
-
-        CheckForWinner(mark, _nextToPlayId);
+        CheckForWinner(_nextToPlay);
         UpdateNextPlayerToPlay();
     }
 
-    private void CheckForWinner(char mark, int playerId)
+    private void CheckForWinner(Player player)
     {
-        CheckForHorizontalWin(mark, playerId);
-        CheckForVerticalWin(mark, playerId);
-        CheckForDiagonalWin(mark, playerId);
+        CheckForHorizontalWin(player);
+        CheckForVerticalWin(player);
+        CheckForDiagonalWin(player);
     }
 
-
-    private void CheckForHorizontalWin(char mark, int playerId)
+    private void CheckForHorizontalWin(Player player)
     {
         for(int row = 0; row < 3; row++)
         {
-            if(_board.MarkIsInFullRow(row, mark))
+            if(_board.MarkIsInFullRow(row, player.Mark))
             {
-                WinnerId = playerId;
+                WinnerId = player.Id;
                 return;
             }
         }
     }
 
-    private void CheckForVerticalWin(char mark, int playerId)
+    private void CheckForVerticalWin(Player player)
     {
         for(int col = 0; col < 3; col++)
         {
-            if(_board.MarkIsInFullColumn(col, mark))
+            if(_board.MarkIsInFullColumn(col, player.Mark))
             {
-                WinnerId = playerId;
+                WinnerId = player.Id;
                 return;
             }
         }
     }
 
-    private void CheckForDiagonalWin(char mark, int playerId)
+    private void CheckForDiagonalWin(Player player)
     {
-        if(_board.MarkIsInFullMainDiagonal(mark) || _board.MarkIsInFullAntiDiagonal(mark))
-            WinnerId = playerId;
+        if(_board.MarkIsInFullMainDiagonal(player.Mark) || _board.MarkIsInFullAntiDiagonal(player.Mark))
+            WinnerId = player.Id;
     }
 
     private void UpdateNextPlayerToPlay()
     {
-        _nextToPlayId = _nextToPlayId == 1 ? 2 : 1;
+        _nextToPlay = _nextToPlay.Id == 1 ? _player2 : _player1;
     }
 
 }
