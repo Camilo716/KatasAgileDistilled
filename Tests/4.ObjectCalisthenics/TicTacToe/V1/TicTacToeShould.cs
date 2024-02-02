@@ -127,4 +127,28 @@ public class TicTacToeShould
         Assert.Equal(expectedBoard, ticTacToe.Board);
         Assert.Equal(1, ticTacToe.WinnerId);
     }
+
+    [Fact]
+    public void AllSquaresFilledWithoutThreeInARowIsADraw()
+    {
+        TicTacToe ticTacToe = new();
+
+        ticTacToe.PlaceMark(new() { Y = 2, X = 0});
+        ticTacToe.PlaceMark(new() { Y = 0, X = 0});
+        ticTacToe.PlaceMark(new() { Y = 0, X = 2});
+        ticTacToe.PlaceMark(new() { Y = 1, X = 1});
+        ticTacToe.PlaceMark(new() { Y = 2, X = 2});
+        ticTacToe.PlaceMark(new() { Y = 1, X = 2});
+        ticTacToe.PlaceMark(new() { Y = 0, X = 1});
+        ticTacToe.PlaceMark(new() { Y = 2, X = 1});
+        ticTacToe.PlaceMark(new() { Y = 1, X = 0});
+
+        char[,] expectedBoard = new char[3, 3] {
+            {'O', 'X', 'X'},
+            {'X', 'O', 'O'},
+            {'X', 'O', 'X'},   
+        };
+        Assert.Equal(expectedBoard, ticTacToe.Board);
+        Assert.Equal(-1, ticTacToe.WinnerId);
+    }
 }
