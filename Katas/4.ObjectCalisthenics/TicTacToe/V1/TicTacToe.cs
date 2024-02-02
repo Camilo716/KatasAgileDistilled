@@ -7,24 +7,30 @@ namespace Katas.ObjectCalisthenics.TicTacToe.V1;
 
 public class TicTacToe
 {
-    public char[,] Board { get; private set; }
-    private int _nextToPlayId;
     public int WinnerId { get; private set; } = -1;  
+    private int _nextToPlayId = 1;
+    private BoardTicTacToe _board;
 
-    public TicTacToe()
+    public TicTacToe(BoardTicTacToe board)
     {
-        Board = GenerateEmptyBoard();
-        _nextToPlayId = 1;
+        _board = board;
+        _board.InitializeEmptyBoard();
+    }
+
+    public char[,] GetCurrentBoard()
+    {
+        return _board.Board;
     }
 
     public void PlaceMark(Coords coords)
     {
-        bool isEmptyPosition = Board[coords.Y, coords.X].Equals(' '); 
+        bool isEmptyPosition = _board.GetSquare(coords).Equals(' '); 
         if(!isEmptyPosition)
             throw new PlayOnPlayedPositionException($"The position Y: {coords.Y} X: {coords.X} is not empty");
 
         char mark = _nextToPlayId == 1 ? 'X' : 'O';
-        Board[coords.Y, coords.X] = mark;
+
+        _board.FillSquare(coords, mark);
 
         CheckForWinner(mark, _nextToPlayId);
         UpdateNextPlayerToPlay();
@@ -42,9 +48,7 @@ public class TicTacToe
     {
         for(int row = 0; row < 3; row++)
         {
-            bool markIsInFullRow = Board[row, 0] == mark && Board[row, 1] == mark && Board[row, 2] == mark;
-
-            if(markIsInFullRow)
+            if(_board.MarkIsInFullRow(row, mark))
             {
                 WinnerId = playerId;
                 return;
@@ -56,9 +60,7 @@ public class TicTacToe
     {
         for(int col = 0; col < 3; col++)
         {
-            bool markIsInFullColumn = Board[0, col] == mark && Board[1, col] == mark && Board[2, col] == mark;
-
-            if(markIsInFullColumn)
+            if(_board.MarkIsInFullColumn(col, mark))
             {
                 WinnerId = playerId;
                 return;
@@ -68,25 +70,13 @@ public class TicTacToe
 
     private void CheckForDiagonalWin(char mark, int playerId)
     {
-        bool hasMarkInCenter = Board[1, 1] == mark;
-        bool fullMainDiagonalMarked = hasMarkInCenter && Board[0, 0] == mark && Board[2, 2] == mark; 
-        bool fullAntiDiagonalMarked = hasMarkInCenter && Board[0, 2] == mark && Board[2, 0] == mark;
-
-        if(fullMainDiagonalMarked || fullAntiDiagonalMarked)
+        if(_board.MarkIsInFullMainDiagonal(mark) || _board.MarkIsInFullAntiDiagonal(mark))
             WinnerId = playerId;
-    }
-
-    private static char[,] GenerateEmptyBoard()
-    {
-        return new char[3,3] {
-            {' ', ' ', ' '},
-            {' ', ' ', ' '},
-            {' ', ' ', ' '},
-        };
     }
 
     private void UpdateNextPlayerToPlay()
     {
         _nextToPlayId = _nextToPlayId == 1 ? 2 : 1;
     }
+
 }

@@ -11,20 +11,20 @@ public class TicTacToeShould
     [Fact]
     public void InitializeBoard()
     {
-        TicTacToe ticTacToe = new();
+        TicTacToe ticTacToe = new(new BoardTicTacToe());
 
         char[,] expectedBoard = new char[3,3] {
             {' ', ' ', ' '},
             {' ', ' ', ' '},
             {' ', ' ', ' '},
         };
-        Assert.Equal(expectedBoard, ticTacToe.Board);
+        Assert.Equal(expectedBoard, ticTacToe.GetCurrentBoard());
     }
 
     [Fact]
     public void Player1PlaceFirstMark()
     {
-        TicTacToe ticTacToe = new();
+        TicTacToe ticTacToe = new(new BoardTicTacToe());
         Coords coords = new() { Y = 2, X = 0};
         
         ticTacToe.PlaceMark(coords);
@@ -34,13 +34,13 @@ public class TicTacToeShould
             {' ', ' ', ' '},
             {'X', ' ', ' '},
         }; 
-        Assert.Equal(expectedBoard, ticTacToe.Board);
+        Assert.Equal(expectedBoard, ticTacToe.GetCurrentBoard());
     }
 
     [Fact]
     public void Player2PlaceAMark()
     {
-        TicTacToe ticTacToe = new();
+        TicTacToe ticTacToe = new(new BoardTicTacToe());
         Coords p1Coords = new() { Y = 2, X = 0};
         Coords p2Coords = new() { Y = 1, X = 0};
         
@@ -52,13 +52,13 @@ public class TicTacToeShould
             {'O', ' ', ' '},
             {'X', ' ', ' '},
         };
-        Assert.Equal(expectedBoard, ticTacToe.Board);
+        Assert.Equal(expectedBoard, ticTacToe.GetCurrentBoard());
     }
 
     [Fact]
     public void CannotPlayOnAPlayedPosition()
     {
-        TicTacToe ticTacToe = new();
+        TicTacToe ticTacToe = new(new BoardTicTacToe());
         Coords p1Coords = new() { Y = 2, X = 0};
         Coords p2Coords = new() { Y = 2, X = 0};
         ticTacToe.PlaceMark(p1Coords);
@@ -71,7 +71,7 @@ public class TicTacToeShould
     [Fact]
     public void PlayerWinsWithHorizontaly()
     {
-        TicTacToe ticTacToe = new();
+        TicTacToe ticTacToe = new(new BoardTicTacToe());
 
         ticTacToe.PlaceMark(new() { Y = 2, X = 0});
         ticTacToe.PlaceMark(new() { Y = 1, X = 0});
@@ -84,14 +84,14 @@ public class TicTacToeShould
             {'O', ' ', ' '},
             {'X', 'X', 'X'},
         };
-        Assert.Equal(expectedBoard, ticTacToe.Board);
+        Assert.Equal(expectedBoard, ticTacToe.GetCurrentBoard());
         Assert.Equal(1, ticTacToe.WinnerId);
     }
 
     [Fact]
     public void PlayerWinsVertically()
     {
-        TicTacToe ticTacToe = new();
+        TicTacToe ticTacToe = new(new BoardTicTacToe());
         
         ticTacToe.PlaceMark(new() { Y = 2, X = 0});
         ticTacToe.PlaceMark(new() { Y = 1, X = 1});
@@ -104,14 +104,14 @@ public class TicTacToeShould
             {'X', 'O', 'O'},
             {'X', ' ', ' '},
         };   
-        Assert.Equal(expectedBoard, ticTacToe.Board);
+        Assert.Equal(expectedBoard, ticTacToe.GetCurrentBoard());
         Assert.Equal(1, ticTacToe.WinnerId);
     }
 
     [Fact]
     public void PlayerWinsDiagonally()
     {
-        TicTacToe ticTacToe = new();
+        TicTacToe ticTacToe = new(new BoardTicTacToe());
 
         ticTacToe.PlaceMark(new() { Y = 2, X = 0});
         ticTacToe.PlaceMark(new() { Y = 1, X = 0});
@@ -124,14 +124,14 @@ public class TicTacToeShould
             {'O', 'X', ' '},
             {'X', ' ', 'O'},   
         };
-        Assert.Equal(expectedBoard, ticTacToe.Board);
+        Assert.Equal(expectedBoard, ticTacToe.GetCurrentBoard());
         Assert.Equal(1, ticTacToe.WinnerId);
     }
 
     [Fact]
     public void AllSquaresFilledWithoutThreeInARowIsADraw()
     {
-        TicTacToe ticTacToe = new();
+        TicTacToe ticTacToe = new(new BoardTicTacToe());
 
         ticTacToe.PlaceMark(new() { Y = 2, X = 0});
         ticTacToe.PlaceMark(new() { Y = 0, X = 0});
@@ -148,7 +148,7 @@ public class TicTacToeShould
             {'X', 'O', 'O'},
             {'X', 'O', 'X'},   
         };
-        Assert.Equal(expectedBoard, ticTacToe.Board);
+        Assert.Equal(expectedBoard, ticTacToe.GetCurrentBoard());
         Assert.Equal(-1, ticTacToe.WinnerId);
     }
 }
