@@ -107,4 +107,24 @@ public class TicTacToeShould
         Assert.Equal(expectedBoard, ticTacToe.Board);
         Assert.Equal(1, ticTacToe.WinnerId);
     }
+
+    [Fact]
+    public void PlayerWinsDiagonally()
+    {
+        TicTacToe ticTacToe = new();
+
+        ticTacToe.PlaceMark(new() { Y = 2, X = 0});
+        ticTacToe.PlaceMark(new() { Y = 1, X = 0});
+        ticTacToe.PlaceMark(new() { Y = 0, X = 2});
+        ticTacToe.PlaceMark(new() { Y = 2, X = 2});
+        ticTacToe.PlaceMark(new() { Y = 1, X = 1});
+
+        char[,] expectedBoard = new char[3, 3] {
+            {' ', ' ', 'X'},
+            {'O', 'X', ' '},
+            {'X', ' ', 'O'},   
+        };
+        Assert.Equal(expectedBoard, ticTacToe.Board);
+        Assert.Equal(1, ticTacToe.WinnerId);
+    }
 }

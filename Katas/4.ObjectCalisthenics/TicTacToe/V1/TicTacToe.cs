@@ -34,6 +34,7 @@ public class TicTacToe
     {
         CheckForHorizontalWin(mark, playerId);
         CheckForVerticalWin(mark, playerId);
+        CheckForDiagonalWin(mark, playerId);
     }
 
 
@@ -63,6 +64,16 @@ public class TicTacToe
                 return;
             }
         }
+    }
+
+    private void CheckForDiagonalWin(char mark, int playerId)
+    {
+        bool hasMarkInCenter = Board[1, 1] == mark;
+        bool fullMainDiagonalMarked = hasMarkInCenter && Board[0, 0] == mark && Board[2, 2] == mark; 
+        bool fullAntiDiagonalMarked = hasMarkInCenter && Board[0, 2] == mark && Board[2, 0] == mark;
+
+        if(fullMainDiagonalMarked || fullAntiDiagonalMarked)
+            WinnerId = playerId;
     }
 
     private static char[,] GenerateEmptyBoard()
