@@ -1,6 +1,6 @@
 using Katas.TestDoubles.CharacterCopier;
 
-namespace Tests.TestDoubles.CharacterCopier;
+namespace Tests.TestDoubles.CharacterCopier.V1;
 
 public class DestinationSpy : IDestination
 {

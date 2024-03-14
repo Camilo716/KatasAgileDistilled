@@ -1,10 +1,10 @@
 using Katas.TestDoubles.CharacterCopier;
 
-namespace Tests.TestDoubles.CharacterCopier;
+namespace Tests.TestDoubles.CharacterCopier.V1;
 public class CopierShould
 {   
     [Fact]
-    public void TestName()
+    public void CopyValueFromSourceToDestination()
     {
         SourceSpy sourceSpy = new();
         DestinationSpy destinationSpy = new();
